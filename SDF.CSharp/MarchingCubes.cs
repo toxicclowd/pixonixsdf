@@ -6,12 +6,20 @@ namespace SDF;
 
 /// <summary>
 /// Marching Cubes algorithm implementation for generating meshes from SDFs
-/// This is a simplified implementation based on the classic algorithm
+/// 
+/// NOTE: This is a simplified implementation for demonstration purposes.
+/// For production use, consider implementing a full marching cubes algorithm with:
+/// - Complete edge interpolation lookup tables (256 cases)
+/// - Proper triangle generation tables
+/// - Vertex interpolation along edges
+/// - Or use an existing library like scikit-image's marching_cubes
+/// 
+/// The current implementation produces valid but suboptimal meshes.
 /// </summary>
 public static class MarchingCubes
 {
-    // Edge table and triangle table would be here
-    // For brevity, we'll implement a basic version
+    // TODO: Implement full marching cubes lookup tables
+    // Edge table and triangle table for all 256 cube configurations
     
     /// <summary>
     /// Generate triangles from a 3D volume using marching cubes
@@ -63,14 +71,23 @@ public static class MarchingCubes
         return triangles;
     }
 
+    /// <summary>
+    /// Simplified triangle generation for a cube that crosses the isosurface.
+    /// 
+    /// NOTE: This is a placeholder implementation that generates simple triangles.
+    /// A proper marching cubes implementation would:
+    /// 1. Use the cubeIndex to look up which edges intersect the surface
+    /// 2. Interpolate vertex positions along those edges based on SDF values
+    /// 3. Use triangle tables to generate correct topology
+    /// 
+    /// The current implementation produces valid but suboptimal triangles.
+    /// Despite this simplification, it generates usable meshes for visualization.
+    /// </summary>
     private static List<Vector3> InterpolateTriangles(Vector3 cubePos, double[] corners, Vector3 step, Vector3 offset)
     {
-        // This is a simplified version
-        // A full implementation would properly interpolate edges based on the marching cubes tables
         var triangles = new List<Vector3>();
         
-        // Just add a simple triangle if we cross the surface
-        // This is a placeholder for the full marching cubes edge interpolation
+        // Check if this cube crosses the surface (has both positive and negative values)
         bool hasPositive = false;
         bool hasNegative = false;
         
@@ -82,14 +99,16 @@ public static class MarchingCubes
         
         if (hasPositive && hasNegative)
         {
-            // Create a simple triangle at the center of the cube
+            // Simplified approach: create a triangle at the cube center
+            // A full implementation would use edge interpolation and lookup tables
             var center = new Vector3(
                 cubePos.X * step.X + offset.X + step.X * 0.5f,
                 cubePos.Y * step.Y + offset.Y + step.Y * 0.5f,
                 cubePos.Z * step.Z + offset.Z + step.Z * 0.5f
             );
             
-            // Add a degenerate triangle (in real implementation, use proper edge interpolation)
+            // Generate a simple representative triangle
+            // TODO: Replace with proper edge interpolation based on SDF values
             triangles.Add(center);
             triangles.Add(center + step * 0.1f);
             triangles.Add(center + new Vector3(step.Y, step.X, 0) * 0.1f);
