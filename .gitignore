@@ -1,3 +1,12 @@
 /sdf.egg-info
 *.stl
 
+# C# Build artifacts
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+
