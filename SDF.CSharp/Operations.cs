@@ -37,6 +37,9 @@ public static class Operations
     /// </summary>
     public static SDF3 SmoothUnion(SDF3 a, SDF3 b, double k)
     {
+        if (k <= 0)
+            throw new ArgumentException("Smoothing factor k must be positive", nameof(k));
+
         return new SDF3(points =>
         {
             var da = a.Evaluate(points);
@@ -81,6 +84,9 @@ public static class Operations
     /// </summary>
     public static SDF3 SmoothDifference(SDF3 a, SDF3 b, double k)
     {
+        if (k <= 0)
+            throw new ArgumentException("Smoothing factor k must be positive", nameof(k));
+
         return new SDF3(points =>
         {
             var da = a.Evaluate(points);
@@ -88,7 +94,7 @@ public static class Operations
             var result = new double[points.Length];
             for (int i = 0; i < points.Length; i++)
             {
-                var h = Math.Max(k - Math.Abs(-da[i] - db[i]), 0.0) / k;
+                var h = Math.Max(k - Math.Abs(da[i] + db[i]), 0.0) / k;
                 result[i] = Math.Max(da[i], -db[i]) + h * h * k * 0.25;
             }
             return result;
@@ -125,6 +131,9 @@ public static class Operations
     /// </summary>
     public static SDF3 SmoothIntersection(SDF3 a, SDF3 b, double k)
     {
+        if (k <= 0)
+            throw new ArgumentException("Smoothing factor k must be positive", nameof(k));
+
         return new SDF3(points =>
         {
             var da = a.Evaluate(points);

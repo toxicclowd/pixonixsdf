@@ -39,8 +39,12 @@ public struct Vector3
     public static Vector3 operator *(double scalar, Vector3 a) =>
         new(a.X * scalar, a.Y * scalar, a.Z * scalar);
 
-    public static Vector3 operator /(Vector3 a, double scalar) =>
-        new(a.X / scalar, a.Y / scalar, a.Z / scalar);
+    public static Vector3 operator /(Vector3 a, double scalar)
+    {
+        if (Math.Abs(scalar) < double.Epsilon)
+            throw new DivideByZeroException("Cannot divide vector by zero");
+        return new(a.X / scalar, a.Y / scalar, a.Z / scalar);
+    }
 
     public double Length() =>
         Math.Sqrt(X * X + Y * Y + Z * Z);
