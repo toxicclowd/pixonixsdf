@@ -3,6 +3,26 @@
 Generate 3D meshes based on SDFs (signed distance functions) with a
 dirt simple Python API.
 
+## 🎉 Now Available in C#!
+
+This library has been successfully ported to C#! See:
+- **[README-CSharp.md](README-CSharp.md)** for C# usage guide
+- **[PORTING-SUMMARY.md](PORTING-SUMMARY.md)** for detailed porting information
+
+Quick C# example:
+```csharp
+using SDF;
+using static SDF.Primitives;
+using static SDF.Constants;
+
+var f = Sphere(1.0) & Box(1.5);
+var c = Cylinder(0.5);
+f = f - (c.Orient(X) | c.Orient(Y) | c.Orient(Z));
+f.Save("out.stl");
+```
+
+---
+
 Special thanks to [Inigo Quilez](https://iquilezles.org/) for his excellent documentation on signed distance functions:
 
 - [3D Signed Distance Functions](https://iquilezles.org/www/articles/distfunctions/distfunctions.htm)
