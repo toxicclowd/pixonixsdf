@@ -226,8 +226,8 @@ public static class Core
     public static (Vector3 min, Vector3 max) EstimateBounds(SDF3 sdf)
     {
         const int samples = 16;
-        var min = new Vector3(-1e9, -1e9, -1e9);
-        var max = new Vector3(1e9, 1e9, 1e9);
+        var min = new Vector3(-10, -10, -10);
+        var max = new Vector3(10, 10, 10);
 
         for (int iteration = 0; iteration < 32; iteration++)
         {
@@ -267,6 +267,13 @@ public static class Core
 
             if (nearSurface.Count == 0)
             {
+                // No surface found, try expanding bounds
+                if (iteration == 0)
+                {
+                    min = min * 2.0;
+                    max = max * 2.0;
+                    continue;
+                }
                 break;
             }
 
@@ -289,12 +296,12 @@ public static class Core
             }
 
             // Add padding
-            var padding = new Vector3(stepX, stepY, stepZ);
+            var padding = new Vector3(stepX, stepY, stepZ) * 2.0;
             min = newMin - padding;
             max = newMax + padding;
 
             // Check for convergence
-            if (diagonal < 1e-6)
+            if (diagonal < 1e-3)
             {
                 break;
             }

@@ -1,7 +1,19 @@
 ﻿using SDF;
+using SDF.Examples;
 using static SDF.Primitives;
 using static SDF.Constants;
 
+Console.WriteLine("SDF C# Library - Examples");
+Console.WriteLine("==========================");
+Console.WriteLine();
+
+// Run simple test first
+Console.WriteLine("1. Simple Sphere Test");
+SimpleTest.Run();
+Console.WriteLine();
+
+// Uncomment to run the full CSG example
+// Console.WriteLine("2. CSG Example (sphere & box with cylinder holes)");
 // This is the C# port of the canonical CSG example from the Python library
 // Original Python code:
 // f = sphere(1) & box(1.5)
@@ -9,19 +21,9 @@ using static SDF.Constants;
 // f -= c.orient(X) | c.orient(Y) | c.orient(Z)
 // f.save('out.stl')
 
-Console.WriteLine("SDF C# Library - Example");
-Console.WriteLine("Generating CSG example mesh...");
-Console.WriteLine();
+// var f = Sphere(1.0) & Box(1.5);
+// var c = Cylinder(0.5);
+// f = f - (c.Orient(X) | c.Orient(Y) | c.Orient(Z));
+// f.Save("out.stl", verbose: true);
 
-// Create a sphere intersected with a box
-var f = Sphere(1.0) & Box(1.5);
-
-// Create a cylinder and subtract it in three orientations
-var c = Cylinder(0.5);
-f = f - (c.Orient(X) | c.Orient(Y) | c.Orient(Z));
-
-// Save to STL file
-f.Save("out.stl", verbose: true);
-
-Console.WriteLine();
-Console.WriteLine("Done! Mesh saved to out.stl");
+Console.WriteLine("All tests complete!");
