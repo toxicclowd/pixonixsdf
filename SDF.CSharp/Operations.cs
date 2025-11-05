@@ -212,4 +212,165 @@ public static class Operations
     {
         return -SmoothMin(-a, -b, k);
     }
+
+    // Deformation Operations
+
+    /// <summary>
+    /// Twist an SDF around the Z axis
+    /// </summary>
+    public static SDF3 Twist(this SDF3 sdf, double k)
+    {
+        return new SDF3(points =>
+        {
+            var twistedPoints = new Vector3[points.Length];
+            for (int i = 0; i < points.Length; i++)
+            {
+                var p = points[i];
+                var c = Math.Cos(k * p.Z);
+                var s = Math.Sin(k * p.Z);
+                twistedPoints[i] = new Vector3(
+                    (float)(c * p.X - s * p.Y),
+                    (float)(s * p.X + c * p.Y),
+                    p.Z
+                );
+            }
+            return sdf.Evaluate(twistedPoints);
+        });
+    }
+
+    /// <summary>
+    /// Bend an SDF
+    /// </summary>
+    public static SDF3 Bend(this SDF3 sdf, double k)
+    {
+        return new SDF3(points =>
+        {
+            var bentPoints = new Vector3[points.Length];
+            for (int i = 0; i < points.Length; i++)
+            {
+                var p = points[i];
+                var c = Math.Cos(k * p.X);
+                var s = Math.Sin(k * p.X);
+                bentPoints[i] = new Vector3(
+                    (float)(c * p.X - s * p.Y),
+                    (float)(s * p.X + c * p.Y),
+                    p.Z
+                );
+            }
+            return sdf.Evaluate(bentPoints);
+        });
+    }
+
+    /// <summary>
+    /// Elongate an SDF along each axis
+    /// </summary>
+    public static SDF3 Elongate(this SDF3 sdf, Vector3 size)
+    {
+        return new SDF3(points =>
+        {
+            var elongatedPoints = new Vector3[points.Length];
+            for (int i = 0; i < points.Length; i++)
+            {
+                var p = points[i];
+                elongatedPoints[i] = new Vector3(
+                    p.X - Math.Clamp(p.X, -size.X, size.X),
+                    p.Y - Math.Clamp(p.Y, -size.Y, size.Y),
+                    p.Z - Math.Clamp(p.Z, -size.Z, size.Z)
+                );
+            }
+            return sdf.Evaluate(elongatedPoints);
+        });
+    }
+
+    /// <summary>
+    /// Dilate (expand) an SDF
+    /// </summary>
+    public static SDF3 Dilate(this SDF3 sdf, double r)
+    {
+        return new SDF3(points =>
+        {
+            var values = sdf.Evaluate(points);
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] -= r;
+            }
+            return values;
+        });
+    }
+
+    /// <summary>
+    /// Erode (shrink) an SDF
+    /// </summary>
+    public static SDF3 Erode(this SDF3 sdf, double r)
+    {
+        return new SDF3(points =>
+        {
+            var values = sdf.Evaluate(points);
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] += r;
+            }
+            return values;
+        });
+    }
+
+    /// <summary>
+    /// Create a shell of specified thickness
+    /// </summary>
+    public static SDF3 Shell(this SDF3 sdf, double thickness)
+    {
+        return new SDF3(points =>
+        {
+            var values = sdf.Evaluate(points);
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = Math.Abs(values[i]) - thickness;
+            }
+            return values;
+        });
+    }
+
+    /// <summary>
+    /// Repeat an SDF with specified spacing
+    /// </summary>
+    public static SDF3 Repeat(this SDF3 sdf, Vector3 spacing, Vector3? count = null)
+    {
+        if (count.HasValue)
+        {
+            // Finite repetition
+            var c = count.Value;
+            return new SDF3(points =>
+            {
+                var repeatedPoints = new Vector3[points.Length];
+                for (int i = 0; i < points.Length; i++)
+                {
+                    var p = points[i];
+                    repeatedPoints[i] = new Vector3(
+                        p.X - spacing.X * (float)Math.Clamp(Math.Round(p.X / spacing.X), -c.X, c.X),
+                        p.Y - spacing.Y * (float)Math.Clamp(Math.Round(p.Y / spacing.Y), -c.Y, c.Y),
+                        p.Z - spacing.Z * (float)Math.Clamp(Math.Round(p.Z / spacing.Z), -c.Z, c.Z)
+                    );
+                }
+                return sdf.Evaluate(repeatedPoints);
+            });
+        }
+        else
+        {
+            // Infinite repetition
+            return new SDF3(points =>
+            {
+                var repeatedPoints = new Vector3[points.Length];
+                for (int i = 0; i < points.Length; i++)
+                {
+                    var p = points[i];
+                    repeatedPoints[i] = new Vector3(
+                        p.X - spacing.X * (float)Math.Round(p.X / spacing.X),
+                        p.Y - spacing.Y * (float)Math.Round(p.Y / spacing.Y),
+                        p.Z - spacing.Z * (float)Math.Round(p.Z / spacing.Z)
+                    );
+                }
+                return sdf.Evaluate(repeatedPoints);
+            });
+        }
+    }
 }
