@@ -11,4 +11,9 @@ obj/
 *.dll
 *.pdb
 *.exe
+*.dll
+*.exe
+*.pdb
+*.deps.json
+*.runtimeconfig.json
 
