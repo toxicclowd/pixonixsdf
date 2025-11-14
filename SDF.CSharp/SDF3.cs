@@ -17,15 +17,6 @@ public class SDF3
     }
 
     /// <summary>
-    /// Evaluate the SDF at the given points
-    private double? _k;
-
-    public SDF3(Func<Vector3[], double[]> function)
-    {
-        _function = function;
-    }
-
-    /// <summary>
     /// Evaluate the SDF at given points
     /// </summary>
     public double[] Evaluate(Vector3[] points)
@@ -89,18 +80,5 @@ public class SDF3
         var points = Generate(step, bounds, samples, batchSize, sparse, verbose);
         StlWriter.WriteBinaryStl(path, points);
     }
-    /// Set smoothing parameter for boolean operations
-    /// </summary>
-    public SDF3 K(double k)
-    {
-        _k = k;
-        return this;
-    }
-
-    internal double? GetK() => _k;
-
-    // Boolean operations using operator overloading
-    public static SDF3 operator |(SDF3 a, SDF3 b) => Operations.Union(a, b);
-    public static SDF3 operator &(SDF3 a, SDF3 b) => Operations.Intersection(a, b);
-    public static SDF3 operator -(SDF3 a, SDF3 b) => Operations.Difference(a, b);
 }
+

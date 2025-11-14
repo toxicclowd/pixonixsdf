@@ -59,7 +59,7 @@ public static class Primitives
     /// </summary>
     public static SDF3 Box(double size = 1.0, Vector3? center = null)
     {
-        return Box(new Vector3((float)size), center);
+        return Box(new Vector3(size, size, size), center);
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ public static class Primitives
     /// </summary>
     public static SDF3 RoundedBox(Vector3 size, double radius)
     {
-        var halfSize = size / 2.0f - new Vector3((float)radius);
+        var halfSize = size / 2.0 - new Vector3(radius, radius, radius);
         
         return new SDF3(points =>
         {

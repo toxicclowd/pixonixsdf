@@ -130,7 +130,7 @@ public class MeshGenerator
         // Apply marching cubes
         var step = new Vector3(batch.StepX, batch.StepY, batch.StepZ);
         var offset = new Vector3(batch.MinX, batch.MinY, batch.MinZ);
-        return MarchingCubes.GenerateTriangles(volume, step, offset);
+        return MarchingCubes.Generate(volume, offset, step);
     }
 
     private bool ShouldSkip(SDF3 sdf, Batch batch)
@@ -263,8 +263,16 @@ public class MeshGenerator
             
             foreach (var p in nearSurface)
             {
-                newMin = Vector3.Min(newMin, p);
-                newMax = Vector3.Max(newMax, p);
+                newMin = new Vector3(
+                    Math.Min(newMin.X, p.X),
+                    Math.Min(newMin.Y, p.Y),
+                    Math.Min(newMin.Z, p.Z)
+                );
+                newMax = new Vector3(
+                    Math.Max(newMax.X, p.X),
+                    Math.Max(newMax.Y, p.Y),
+                    Math.Max(newMax.Z, p.Z)
+                );
             }
 
             min = newMin - new Vector3(dx, dy, dz) / 2;
