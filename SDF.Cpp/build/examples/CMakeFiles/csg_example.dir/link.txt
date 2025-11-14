@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/csg_example.dir/link.d CMakeFiles/csg_example.dir/csg_example.cpp.o -o csg_example  -Wl,-rpath,/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build ../libsdf.so

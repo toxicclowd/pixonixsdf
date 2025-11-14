@@ -1,0 +1,16 @@
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/CMakeFiles/sdf.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/CMakeFiles/edit_cache.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/CMakeFiles/rebuild_cache.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/CMakeFiles/list_install_components.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/CMakeFiles/install.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/CMakeFiles/install/local.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/CMakeFiles/install/strip.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/simple_example.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/csg_example.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/operations_example.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/edit_cache.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/rebuild_cache.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/list_install_components.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/install.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/install/local.dir
+/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build/examples/CMakeFiles/install/strip.dir

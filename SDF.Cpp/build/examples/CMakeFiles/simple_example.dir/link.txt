@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/simple_example.dir/link.d CMakeFiles/simple_example.dir/simple_example.cpp.o -o simple_example  -Wl,-rpath,/home/runner/work/pixonixsdf/pixonixsdf/SDF.Cpp/build ../libsdf.so
