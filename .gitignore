@@ -4,6 +4,13 @@
 # C# Build artifacts
 bin/
 obj/
+*.user
+*.suo
+*.cache
+.vs/
+*.dll
+*.pdb
+*.exe
 *.dll
 *.exe
 *.pdb
